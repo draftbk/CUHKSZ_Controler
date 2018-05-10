@@ -72,7 +72,7 @@ public class SendCommandActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
                 mySocketBinder= (MyService.MySocketBinder) service;
-                mySocketBinder.startSocket();
+                mySocketBinder.startSocket(editIp.getText().toString(), 2000);
             }
 
             @Override
@@ -117,60 +117,13 @@ public class SendCommandActivity extends AppCompatActivity implements View.OnCli
                     Intent bindIntent=new Intent(this,MyService.class);
                     //绑定服务
                     bindService(bindIntent,connection,BIND_AUTO_CREATE);
-                    // 利用线程池直接开启一个线程 & 执行该线程
-//                    mThreadPool.execute(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            try {
-//                                // 创建Socket对象 & 指定服务端的IP 及 端口号
-//                                socket = new Socket(editIp.getText().toString(), 2000);
-//                                // 判断客户端和服务器是否连接成功
-//                                System.out.println(socket.isConnected());
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                            try {
-//                                //吧out也在这里初始化
-//                                outputStream = socket.getOutputStream();
-//                                // 步骤1：创建输入流对象InputStream
-//                                is = socket.getInputStream();
-//                                // 步骤2：创建输入流读取器对象 并传入输入流对象
-//                                // 该对象作用：获取服务器返回的数据
-//                                isr = new InputStreamReader(is);
-//                                br = new BufferedReader(isr);
-//                                while(true){
-//                                    System.out.println("这里");
-//                                    // 步骤3：通过输入流读取器对象 接收服务器发送过来的数据
-//                                    response = br.readLine();
-//                                    // 步骤4:通知主线程,将接收的消息显示到界面
-//                                    System.out.println("这里2");
-//                                    Message msg = new Message();
-//                                    msg.obj=response;
-//                                    handler.sendMessage(msg);
-//                                }
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    });
                 }else {
                     showToast("关闭连接");
                     Intent stopService=new Intent(this,MyService.class);
                     stopService(stopService);
                     //解绑service
                     unbindService(connection);
-//                    try {
-//                        // 断开 客户端发送到服务器 的连接，即关闭输出流对象OutputStream
-//                        outputStream.close();
-//                        // 断开 服务器发送到客户端 的连接，即关闭输入流读取器对象BufferedReader
-//                        br.close();
-//                        // 最终关闭整个Socket连接
-//                        socket.close();
-//                        // 判断客户端和服务器是否已经断开连接
-//                        System.out.println(socket.isConnected());
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
+
                 }
                 break;
             case R.id.button_send:
