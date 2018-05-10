@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,16 +16,6 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -38,27 +27,8 @@ public class SendCommandActivity extends AppCompatActivity implements View.OnCli
     private Handler handler;
     private MyService.MySocketBinder mySocketBinder;
     private ServiceConnection connection;
-    /**
-     * 接收服务器消息 变量
-     */
-    // 输入流对象
-    InputStream is;
-    // 输入流读取器对象
-    InputStreamReader isr ;
-    BufferedReader br ;
-    // 接收服务器发送过来的消息
-    String response;
-    /**
-     * 发送消息到服务器 变量
-     */
-    // 输出流对象
-    OutputStream outputStream;
     // 线程池
     private ExecutorService mThreadPool;
-    // Socket变量
-    private Socket socket;
-    // 接收的text
-    private String receText="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,13 +36,12 @@ public class SendCommandActivity extends AppCompatActivity implements View.OnCli
         init();
         initService();
     }
-
     private void initService() {
         connection=new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
                 mySocketBinder= (MyService.MySocketBinder) service;
-                mySocketBinder.startSocket(editIp.getText().toString(), 2000);
+                mySocketBinder.startSocket(editIp.getText().toString(), 2000,handler);
             }
 
             @Override
@@ -98,8 +67,7 @@ public class SendCommandActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                receText=receText+msg.obj.toString();
-                testReveiver.setText(receText);
+                testReveiver.setText(msg.obj.toString());
             }
         };
         connectSwitch.setOnClickListener(this);
@@ -123,28 +91,10 @@ public class SendCommandActivity extends AppCompatActivity implements View.OnCli
                     stopService(stopService);
                     //解绑service
                     unbindService(connection);
-
                 }
                 break;
             case R.id.button_send:
-                // 利用线程池直接开启一个线程 & 执行该线程
-                mThreadPool.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            // 步骤1：从Socket 获得输出流对象OutputStream
-                            // 该对象作用：发送数据
-                            String message=editContent.getText().toString();
-                            outputStream.write((message+"\n").getBytes("utf-8"));
-                            // 特别注意：数据的结尾加上换行符才可让服务器端的readline()停止阻塞
-                            // 步骤3：发送数据到服务端
-                            outputStream.flush();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                });
+                showToast(mySocketBinder.sendMessage(editContent.getText().toString()));
                 break;
             case R.id.button_cancel:
                 finish();
@@ -157,35 +107,6 @@ public class SendCommandActivity extends AppCompatActivity implements View.OnCli
         Toast.makeText(SendCommandActivity.this,s,Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * 从参数的Socket里获取最新的消息
-     */
-    private void startReader(final Socket socket) {
-
-        mThreadPool.execute(new Runnable() {
-            @Override
-            public void run() {
-               // DataInputStream reader;
-                try {
-                    // 获取读取流
-                 //   reader = new DataInputStream( socket.getInputStream());
-                    while (true) {
-                        System.out.println("*等待客户端输入*");
-                        // 读取数据
-                        BufferedReader br=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        String line=br.readLine();
-                        String msg = line;
-                        System.out.println("获取到客户端的信息：" + line);
-                        Message message=new Message();
-                        message.obj=msg+"\n";
-                        handler.sendMessage(message);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     /**
      *创建菜单
@@ -209,24 +130,11 @@ public class SendCommandActivity extends AppCompatActivity implements View.OnCli
             default:
                 break;
         }
-
         return true;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        try {
-            // 断开 客户端发送到服务器 的连接，即关闭输出流对象OutputStream
-            outputStream.close();
-            // 断开 服务器发送到客户端 的连接，即关闭输入流读取器对象BufferedReader
-            br.close();
-            // 最终关闭整个Socket连接
-            socket.close();
-            // 判断客户端和服务器是否已经断开连接
-            System.out.println(socket.isConnected());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

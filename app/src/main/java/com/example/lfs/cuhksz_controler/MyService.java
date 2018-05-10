@@ -23,7 +23,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MyService extends Service {
-    private Handler handler;
     /**
      * 接收服务器消息 变量
      */
@@ -49,10 +48,30 @@ public class MyService extends Service {
     }
     private MySocketBinder mySocketBinder=new MySocketBinder();
     class MySocketBinder extends Binder{
-        public String getMessage(){
-            return receText;
+        public String sendMessage(final String message){
+            //如果socket不连接则不执行
+            if (!socket.isConnected()){
+                return "请连接";
+            }
+            // 利用线程池直接开启一个线程 & 执行该线程
+            mThreadPool.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        // 步骤1：从Socket 获得输出流对象OutputStream
+                        // 特别注意：数据的结尾加上换行符才可让服务器端的readline()停止阻塞
+                        outputStream.write((message+"\n").getBytes("utf-8"));
+                        // 步骤3：发送数据到服务端
+                        outputStream.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+            return "正在发送";
         }
-        public void startSocket(final String ip, final int port){
+        public void startSocket(final String ip, final int port, final Handler handler){
             Log.e("MyService","startSocket");
             // 利用线程池直接开启一个线程 & 执行该线程
                     mThreadPool.execute(new Runnable() {
@@ -114,13 +133,6 @@ public class MyService extends Service {
     }
 
     private void init() {
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                receText=receText+msg.obj.toString();
-            }
-        };
         // 初始化线程池
         mThreadPool = Executors.newCachedThreadPool();
     }
