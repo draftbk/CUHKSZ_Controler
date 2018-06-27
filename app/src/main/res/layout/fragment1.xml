@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0">
+
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:weightSum="3.5"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/text_powder"
+            android:text="@string/fragment1_powder"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Spinner
+            android:id="@+id/spinner_powder"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+        </Spinner>
+        <TextView
+            android:text="@string/fragment1_weight"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/edit_weight"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:hint="g"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:weightSum="3.5"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/text_liquid_1"
+            android:text="@string/fragment1_liquid_1"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Spinner
+            android:id="@+id/spinner_liquid_1"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+        </Spinner>
+        <TextView
+            android:text="@string/fragment1_volume"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/edit_v_1"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:hint="ml"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:weightSum="3.5"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/text_liquid_2"
+            android:text="@string/fragment1_liquid_2"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Spinner
+            android:id="@+id/spinner_liquid_2"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+        </Spinner>
+        <TextView
+            android:text="@string/fragment1_volume"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/edit_v_2"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:hint="ml"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:weightSum="3.5"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/text_liquid_3"
+            android:text="@string/fragment1_liquid_3"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Spinner
+            android:id="@+id/spinner_liquid_3"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+        </Spinner>
+        <TextView
+            android:text="@string/fragment1_volume"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/edit_v_3"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:hint="ml"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:weightSum="3"
+        android:layout_height="50dp">
+
+        <TextView
+            android:text="@string/fragment1_order"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:text=""
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:text="@string/fragment1_speed"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:text=""
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:weightSum="3"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/text_order_1"
+            android:text="@string/fragment1_order"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Spinner
+            android:id="@+id/spinner_order_1"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+
+        <EditText
+            android:id="@+id/edit_speed_1"
+            android:hint="s"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:text=""
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:weightSum="3"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/text_order_2"
+            android:text="@string/fragment1_order"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Spinner
+            android:id="@+id/spinner_order_2"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+
+        <EditText
+            android:id="@+id/edit_speed_2"
+            android:hint="s"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:text=""
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:weightSum="3"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/text_order_3"
+            android:text="@string/fragment1_order"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Spinner
+            android:id="@+id/spinner_order_3"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+
+        <EditText
+            android:id="@+id/edit_speed_3"
+            android:hint="s"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:text=""
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:weightSum="3"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/text_order_4"
+            android:text="@string/fragment1_order"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Spinner
+            android:id="@+id/spinner_order_4"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+
+        <EditText
+            android:id="@+id/edit_speed_4"
+            android:hint="s"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:text=""
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,3 +1,41 @@
 <resources>
     <string name="app_name">CUHKSZ_Controler</string>
+    <string name="tab_menu_alert">material</string>
+    <string name="tab_menu_profile">reaction</string>
+    <string name="tab_menu_pay">find</string>
+    <string name="tab_menu_setting">results</string>
+
+    <!--fragment1-->
+    <string name="fragment1_weight">weight</string>
+    <string name="fragment1_volume">volume</string>
+    <string name="fragment1_powder">powder</string>
+    <string name="fragment1_liquid_1">liquid 1</string>
+    <string name="fragment1_liquid_2">liquid 2</string>
+    <string name="fragment1_liquid_3">liquid 3</string>
+    <string name="fragment1_order">order</string>
+    <string name="fragment1_speed">speed</string>
+
+    <!--fragment2-->
+    <string name="fragment2_temperature">temperature</string>
+    <string name="fragment2_ultraviolet_lamp">ultraviolet lamp</string>
+    <string name="fragment2_electric_field">electric field</string>
+    <string name="fragment2_magnetic_field">magnetic field</string>
+    <string name="fragment2_open">open(s)</string>
+    <string name="fragment2_close">close(s)</string>
+    <string name="fragment2_period">period</string>
+
+    <!--fragment2_dialog-->
+    <string name="fragment2_dialog_title">temperature setting</string>
+    <string name="fragment2_dialog_blank1">number</string>
+    <string name="fragment2_dialog_blank2">temperature(℃)</string>
+    <string name="fragment2_dialog_blank3">time(s)</string>
+
+    <!--fragment3-->
+    <string name="fragment3_temperature_curve">temperature curve</string>
+    <string name="fragment3_color">color</string>
+    <string name="fragment3_experiment_process">the process of experiment</string>
+
+
+
+
 </resources>
