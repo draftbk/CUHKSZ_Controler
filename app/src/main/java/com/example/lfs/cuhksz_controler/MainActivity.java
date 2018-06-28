@@ -1,5 +1,11 @@
 package com.example.lfs.cuhksz_controler;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -18,6 +24,8 @@ import android.widget.Toast;
 import com.example.lfs.cuhksz_controler.application.MyApplication;
 import com.example.lfs.cuhksz_controler.fragment.MyFragmentPagerAdapter;
 
+import java.util.concurrent.Executors;
+
 
 /**
  * Created by Coder-pig on 2015/8/28 0028.
@@ -32,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private RadioButton rb_message;
     private RadioButton rb_better;
     private ViewPager vpager;
+    private Handler handler;
+    private MyService.MySocketBinder mySocketBinder;
+    private ServiceConnection connection;
 
     private MyFragmentPagerAdapter mAdapter;
 
@@ -46,8 +57,36 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+        initService();
+        init();
         bindViews();
         rb_channel.setChecked(true);
+    }
+
+    private void init() {
+        // 初始化handler
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                showToast(msg.obj.toString());
+            }
+        };
+    }
+
+    private void initService() {
+        connection=new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                mySocketBinder= (MyService.MySocketBinder) service;
+                mySocketBinder.startSocket(MyApplication.connectIP, 2000,handler);
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        };
     }
 
     private void bindViews() {
@@ -89,9 +128,21 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             @Override
             public void onCheckedChanged(CompoundButton btn, boolean isChecked) {
                 if (isChecked) { //开店申请
-                    MyApplication.connectIP="19999999";
+                    MyApplication.connectIP="10.24.2.94";
+                    showToast("打开连接");
+                    Intent startService=new Intent(MainActivity.this,MyService.class);
+                    startService(startService);
+                    Intent bindIntent=new Intent(MainActivity.this,MyService.class);
+                    //绑定服务
+                    bindService(bindIntent,connection,BIND_AUTO_CREATE);
+
                 } else { //关店申请
-                    MyApplication.connectIP="0000000";
+                    MyApplication.connectIP="10.24.2.9";
+                    showToast("关闭连接");
+                    Intent stopService=new Intent(MainActivity.this,MyService.class);
+                    stopService(stopService);
+                    //解绑service
+                    unbindService(connection);
                 }
             }
         });
@@ -140,6 +191,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     break;
             }
         }
+    }
+    private void showToast(String s) {
+        Toast.makeText(MainActivity.this,s,Toast.LENGTH_SHORT).show();
     }
 }
 
