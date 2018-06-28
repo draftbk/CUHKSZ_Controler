@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lfs.cuhksz_controler.application.MyApplication;
 import com.example.lfs.cuhksz_controler.fragment.MyFragmentPagerAdapter;
 
 
@@ -80,6 +83,18 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.send_command_activity_menu,menu); //通过getMenuInflater()方法得到MenuInflater对象，再调用它的inflate()方法就可以给当前活动创建菜单了，第一个参数：用于指定我们通过哪一个资源文件来创建菜单；第二个参数：用于指定我们的菜单项将添加到哪一个Menu对象当中。
+        Switch switchShop=(Switch) menu.findItem(R.id.connect_switch).getActionView().findViewById(R.id.switchForActionBar);
+        switchShop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton btn, boolean isChecked) {
+                if (isChecked) { //开店申请
+                    MyApplication.connectIP="19999999";
+                } else { //关店申请
+                    MyApplication.connectIP="0000000";
+                }
+            }
+        });
         return true; // true：允许创建的菜单显示出来，false：创建的菜单将无法显示。
     }
 
@@ -91,11 +106,12 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
         switch (item.getItemId()){
             case R.id.menu_connect:
-                Toast.makeText(this, "你点击了 添加！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, MyApplication.connectIP, Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
         }
+
         return true;
     }
 
