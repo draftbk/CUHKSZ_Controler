@@ -127,7 +127,7 @@ public class MyService extends Service {
         PendingIntent pi=PendingIntent.getActivities(this,0, new Intent[]{notiIntent},0);
         Notification notification=new Notification.Builder(this)
                 .setContentTitle("CUHKSZ").setContentText("开始监听设备").setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.mipmap.ic_launcher).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
+                .setSmallIcon(R.mipmap.cuhksz).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
                 .setContentIntent(pi).build();
         startForeground(1,notification);
     }

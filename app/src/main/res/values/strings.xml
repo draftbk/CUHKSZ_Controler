@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CUHKSZ_Controler</string>
+    <string name="app_name">AIR-Chem</string>
     <string name="tab_menu_alert">material</string>
     <string name="tab_menu_profile">reaction</string>
     <string name="tab_menu_pay">find</string>

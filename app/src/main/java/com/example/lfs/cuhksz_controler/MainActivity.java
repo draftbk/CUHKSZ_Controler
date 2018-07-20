@@ -1,6 +1,8 @@
 package com.example.lfs.cuhksz_controler;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Handler;
@@ -15,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 import com.example.lfs.cuhksz_controler.application.MyApplication;
 import com.example.lfs.cuhksz_controler.fragment.MyFragmentPagerAdapter;
 
+import java.io.UnsupportedEncodingException;
 import java.util.concurrent.Executors;
 
 
@@ -64,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     }
 
     private void init() {
+        //初始化ip
+        MyApplication.initIp(MainActivity.this);
         // 初始化handler
         handler = new Handler() {
             @Override
@@ -79,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
                 mySocketBinder= (MyService.MySocketBinder) service;
-                mySocketBinder.startSocket(MyApplication.connectIP, 2000,handler);
+                mySocketBinder.startSocket(MyApplication.connectIP, 2001,handler);
             }
 
             @Override
@@ -128,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             @Override
             public void onCheckedChanged(CompoundButton btn, boolean isChecked) {
                 if (isChecked) { //开店申请
-                    MyApplication.connectIP="10.24.2.94";
                     showToast("打开连接");
                     Intent startService=new Intent(MainActivity.this,MyService.class);
                     startService(startService);
@@ -137,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     bindService(bindIntent,connection,BIND_AUTO_CREATE);
 
                 } else { //关店申请
-                    MyApplication.connectIP="10.24.2.9";
                     showToast("关闭连接");
                     Intent stopService=new Intent(MainActivity.this,MyService.class);
                     stopService(stopService);
@@ -158,6 +162,16 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         switch (item.getItemId()){
             case R.id.menu_connect:
                 Toast.makeText(this, MyApplication.connectIP, Toast.LENGTH_SHORT).show();
+                showInputDialog();
+                break;
+            case R.id.menu_send:
+                try {
+                    String message="3";
+                    message=new String(message.getBytes("UTF-8"));
+                    showToast(mySocketBinder.sendMessage(message));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 break;
             default:
                 break;
@@ -194,6 +208,26 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     }
     private void showToast(String s) {
         Toast.makeText(MainActivity.this,s,Toast.LENGTH_SHORT).show();
+    }
+    private void showInputDialog() {
+    /*@setView 装入一个EditView
+     */
+        final EditText editText = new EditText(MainActivity.this);
+        editText.setText(MyApplication.connectIP);
+        AlertDialog.Builder inputDialog =
+                new AlertDialog.Builder(MainActivity.this);
+        inputDialog.setTitle("输入对应IP地址").setView(editText);
+        inputDialog.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String inputIP=editText.getText().toString();
+                        Toast.makeText(MainActivity.this,
+                                inputIP,
+                                Toast.LENGTH_SHORT).show();
+                        MyApplication.saveIp(MainActivity.this,inputIP);
+                    }
+                }).show();
     }
 }
 
